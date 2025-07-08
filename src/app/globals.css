@@ -1,0 +1,97 @@
+@import "tailwindcss";
+
+/* Modern, clean light theme */
+html,
+body {
+  background: #f7f8fa;
+  color: #222;
+  font-family: 'Inter', 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+}
+
+input,
+textarea,
+select,
+button {
+  font-family: inherit;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: 1px solid #e5e7eb;
+  background: #fff;
+  color: #222;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input:focus,
+textarea:focus,
+select:focus,
+button:focus {
+  border-color: #a5b4fc;
+  box-shadow: 0 0 0 2px #e0e7ff;
+}
+::-webkit-scrollbar {
+  width: 8px;
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #e5e7eb;
+  border-radius: 4px;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid #e5e7eb;
+  margin: 2rem 0;
+}
+
+/* Remove dark mode classes */
+.dark,
+.dark * {
+  background: unset !important;
+  color: unset !important;
+}
+
+/* Utility classes for spacing and rounded corners */
+.rounded-lg {
+  border-radius: 12px;
+}
+
+.rounded {
+  border-radius: 6px;
+}
+
+.shadow-sm {
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.04);
+}
+
+.shadow-md {
+  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.06);
+}
+
+.bg-white {
+  background: #fff !important;
+}
+
+.text-black {
+  color: #222 !important;
+}
+
+.text-gray-700 {
+  color: #374151 !important;
+}
+
+/* Remove thick borders */
+.border {
+  border-width: 1px !important;
+  border-color: #e5e7eb !important;
+}
+
+/* Remove background transition for light mode */
+.transition-colors {
+  transition: color 0.2s, background 0.2s;
+}
