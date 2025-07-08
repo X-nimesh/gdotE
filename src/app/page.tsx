@@ -11,7 +11,10 @@ export default function Home() {
   return (
     <div className="h-screen w-screen overflow-hidden">
       {/* Top Controls */}
-      <div className="flex justify-end items-center p-4 border-b bg-background gap-2">
+      <div className="flex justify-between items-center p-4 border-b bg-background gap-2">
+        <div className="flex items-center">
+          <img src="/gdotv.png" alt="gdotv logo" className="h-8 w-10 mr-3 rounded" />
+        </div>
         <ConnectionForm />
       </div>
       {/* Main Resizable Layout */}
