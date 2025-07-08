@@ -13,6 +13,7 @@
     "@dnd-kit/sortable": "^10.0.0",
     "@dnd-kit/utilities": "^3.2.2",
     "@monaco-editor/react": "^4.7.0",
+    "@uiw/react-json-view": "^2.0.0-alpha.32",
     "gremlin": "^3.7.3",
     "konva": "^9.3.21",
     "next": "15.3.5",
@@ -20,7 +21,6 @@
     "react-dom": "^19.0.0",
     "react-force-graph": "^1.48.0",
     "react-force-graph-2d": "^1.28.0",
-    "react-json-view": "^1.21.3",
     "react-konva": "^19.0.7",
     "react18-json-view": "^0.2.9",
     "zustand": "^5.0.6"

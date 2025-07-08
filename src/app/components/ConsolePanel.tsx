@@ -1,6 +1,6 @@
 "use client";
 import { useGraphStore } from "@/store/useGraphStore";
-import ReactJson from "react-json-view";
+import JsonView from '@uiw/react-json-view';
 import { useEffect, useState } from "react";
 
 export default function ConsolePanel() {
@@ -28,16 +28,11 @@ export default function ConsolePanel() {
       <div className="font-bold text-base px-4 pt-4 pb-2 border-b border-gray-200 bg-white rounded-t-lg sticky top-0 z-10">Console Output</div>
       <div className="flex-1 min-h-0 overflow-auto overflow-x-auto whitespace-pre p-4 text-gray-700 text-sm font-mono">
         {isJson ? (
-          <ReactJson
-            src={json}
-            name={false}
-            theme="rjv-default"
-            iconStyle="triangle"
+          <JsonView
+            value={json}
             collapsed={false}
             enableClipboard={true}
-            displayDataTypes={true}
-            displayObjectSize={false}
-            style={{ fontSize: 14, fontFamily: 'Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace', tabSize: 2 }}
+            style={{ fontSize: 14, fontFamily: 'Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace' }}
           />
         ) : (
           consoleOutput?.length > 0 ? consoleOutput : <span className="text-gray-400">Console Output (Results, errors, logs)</span>

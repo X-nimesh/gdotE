@@ -1,6 +1,6 @@
 "use client";
 import { useGraphStore } from "@/store/useGraphStore";
-import ReactJson from "react-json-view";
+import JsonView from '@uiw/react-json-view';
 import { useMemo } from "react";
 
 export default function Sidebar() {
@@ -35,16 +35,11 @@ export default function Sidebar() {
       <div className="flex-1 p-4 overflow-auto">
         <div className="mb-2 font-semibold text-sm">Selected Properties</div>
         {selected ? (
-          <ReactJson
-            src={selected}
-            name={false}
-            theme="rjv-default"
-            iconStyle="triangle"
+          <JsonView
+            value={selected}
             collapsed={2}
             enableClipboard={true}
-            displayDataTypes={true}
-            displayObjectSize={false}
-            style={{ fontSize: 14, fontFamily: 'Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace', tabSize: 2 }}
+            style={{ fontSize: 14, fontFamily: 'Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace' }}
           />
         ) : (
           <div className="text-xs text-muted-foreground">Select a node or edge to inspect properties.</div>
