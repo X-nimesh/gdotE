@@ -14,33 +14,33 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "gdotv",
-  description: "gdotv: Visualize, edit, and query property graphs with Gremlin.",
+  title: "gdotE",
+  description: "gdotE: Visualize, edit, and query property graphs with Gremlin.",
   icons: {
     icon: "/favicon.ico",
     shortcut: "/favicon.ico",
-    apple: "/gdotv.png",
+    apple: "/GdotE.png",
   },
   openGraph: {
-    title: "gdotv",
-    description: "gdotv: Visualize, edit, and query property graphs with Gremlin.",
+    title: "gdotE",
+    description: "gdotE: Visualize, edit, and query property graphs with Gremlin.",
     url: "https://gdote.nimesh.info.np/", // Update with your actual domain
-    siteName: "gdotv",
+    siteName: "gdote",
     images: [
       {
-        url: "/gdotv.png",
+        url: "/GdotE.png",
         width: 512,
         height: 512,
-        alt: "gdotv logo",
+        alt: "gdotE logo",
       },
     ],
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "gdotv",
-    description: "gdotv: Visualize, edit, and query property graphs with Gremlin.",
-    images: ["/gdotv.png"],
+    title: "gdotE",
+    description: "gdotE: Visualize, edit, and query property graphs with Gremlin.",
+    images: ["/GdotE.png"],
     site: "@", // Update with your Twitter handle if available
   },
 };

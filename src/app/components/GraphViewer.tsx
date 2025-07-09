@@ -141,7 +141,7 @@ export default function GraphViewer() {
   if (!nodes.length && !edges.length) {
     return (
       <div className="flex-1 h-full flex items-center justify-center text-muted-foreground">
-        Graph Viewer (Visualization coming soon)
+        Graph Viewer 
       </div>
     );
   }

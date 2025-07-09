@@ -13,7 +13,7 @@ export default function Home() {
       {/* Top Controls */}
       <div className="flex justify-between items-center p-4 border-b bg-background gap-2">
         <div className="flex items-center">
-          <img src="/gdotv.png" alt="gdotv logo" className="h-8 w-10 mr-3 rounded" />
+          <img src="/GdotE.png" alt="gdotE logo" className="h-8 w-10 mr-3 rounded" />
         </div>
         <ConnectionForm />
       </div>

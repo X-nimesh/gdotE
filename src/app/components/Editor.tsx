@@ -3,6 +3,7 @@ import { useGraphStore } from "@/store/useGraphStore";
 import dynamic from "next/dynamic";
 import { useCallback, useRef, useEffect, useState } from "react";
 import { parseGremlinResults } from "@/utils/gremlinHelpers";
+import { gremlinClient } from "@/utils/gremlinClient";
 
 const MonacoEditor = dynamic(() => import("@monaco-editor/react"), { ssr: false });
 
@@ -10,6 +11,8 @@ export default function Editor() {
   const query = useGraphStore((s) => s.query);
   const setQuery = useGraphStore((s) => s.setQuery);
   const connectionString = useGraphStore((s) => s.connectionString);
+  const currentConnection = useGraphStore((s) => s.currentConnection);
+  const isConnected = useGraphStore((s) => s.isConnected);
   const setNodes = useGraphStore((s) => s.setNodes);
   const setEdges = useGraphStore((s) => s.setEdges);
   const setConsoleOutput = useGraphStore((s) => s.setConsoleOutput);
@@ -46,30 +49,34 @@ export default function Editor() {
   };
 
   const runQuery = async () => {
-    if (!query.trim() || !connectionString.trim()) {
-      setConsoleOutput("Please enter both a query and a connection string.");
+    if (!query.trim()) {
+      setConsoleOutput("Please enter a query.");
       return;
     }
+
+    if (!isConnected || !currentConnection) {
+      setConsoleOutput("Please connect to a Gremlin server first.");
+      return;
+    }
+
     setLoading(true);
     setConsoleOutput("Running query...");
+
     try {
-      const res = await fetch("/api/gremlin", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ query, connectionString }),
-      });
-      const data = await res.json();
-      if (data.error) {
-        setConsoleOutput(`Error: ${data.error}`);
-        setNodes([]);
-        setEdges([]);
-      } else {
-        console.log({raw:data.raw});
-        const { nodes, edges } = parseGremlinResults(data.raw);
-        setNodes(nodes);
-        setEdges(edges);
-        setConsoleOutput(JSON.stringify(data.raw, null, 2));
-      }
+      // Connect to the database
+      await gremlinClient.connect(currentConnection);
+
+      // Execute the query
+      const result = await gremlinClient.executeQuery(query);
+
+      // Disconnect after query execution
+      await gremlinClient.disconnect();
+
+      console.log({ raw: result });
+      const { nodes, edges } = parseGremlinResults(result);
+      setNodes(nodes);
+      setEdges(edges);
+      setConsoleOutput(JSON.stringify(result, null, 2));
     } catch (e: any) {
       setConsoleOutput(`Error: ${e.message}`);
       setNodes([]);
@@ -106,7 +113,7 @@ export default function Editor() {
               className="absolute bottom-4 right-4 z-10 px-5 py-2 rounded-lg shadow-lg bg-primary text-white font-semibold hover:bg-primary/90 transition-all focus:outline-none focus:ring-2 focus:ring-primary/50 disabled:opacity-50"
               style={{ boxShadow: "0 4px 16px 0 rgba(0,0,0,0.12)" }}
               onClick={runQuery}
-              disabled={loading}
+              disabled={loading || !isConnected}
             >
               {loading ? "Running..." : "Run Query"}
             </button>

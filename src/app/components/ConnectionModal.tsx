@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { useGraphStore } from "@/store/useGraphStore";
+import { gremlinClient, GremlinConnection } from "@/utils/gremlinClient";
 
 interface ConnectionModalProps {
   open: boolean;
@@ -14,6 +15,8 @@ export default function ConnectionModal({ open, onClose }: ConnectionModalProps)
   const [jsonError, setJsonError] = useState("");
   const [testing, setTesting] = useState(false);
   const setConnectionString = useGraphStore((s) => s.setConnectionString);
+  const setCurrentConnection = useGraphStore((s) => s.setCurrentConnection);
+  const setIsConnected = useGraphStore((s) => s.setIsConnected);
   const setConsoleOutput = useGraphStore((s) => s.setConsoleOutput);
 
   if (!open) return null;
@@ -22,7 +25,9 @@ export default function ConnectionModal({ open, onClose }: ConnectionModalProps)
     e.preventDefault();
     setTesting(true);
     setJsonError("");
-    let testPayload: any = {};
+
+    let connection: GremlinConnection;
+
     if (type === "cosmos") {
       let parsed: any;
       try {
@@ -38,7 +43,7 @@ export default function ConnectionModal({ open, onClose }: ConnectionModalProps)
         setTesting(false);
         return;
       }
-      testPayload = {
+      connection = {
         connectionString: gremlinEndpoint,
         cosmosKey: key,
         cosmosDatabase: database,
@@ -50,21 +55,21 @@ export default function ConnectionModal({ open, onClose }: ConnectionModalProps)
         setTesting(false);
         return;
       }
-      testPayload = { connectionString: endpoint };
+      connection = { connectionString: endpoint };
     }
+
     try {
-      const res = await fetch("/api/test-connection", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(testPayload),
-      });
-      const data = await res.json();
-      if (data.success) {
-        setConnectionString(testPayload.connectionString);
-        setConsoleOutput(`✅ Connected to: ${testPayload.connectionString}`);
+      const result = await gremlinClient.testConnection(connection);
+
+      if (result.success) {
+        // Store the connection details
+        setCurrentConnection(connection);
+        setConnectionString(connection.connectionString);
+        setIsConnected(true);
+        setConsoleOutput(`✅ Connected to: ${connection.connectionString}`);
         onClose();
       } else {
-        setConsoleOutput(`❌ Connection failed: ${data.error}`);
+        setConsoleOutput(`❌ Connection failed: ${result.error}`);
       }
     } catch (e: any) {
       setConsoleOutput(`❌ Connection error: ${e.message}`);

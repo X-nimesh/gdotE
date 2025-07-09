@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { GremlinConnection } from "@/utils/gremlinClient";
 
 export interface NodeData {
   id: string;
@@ -19,6 +20,10 @@ interface GraphStore {
   setQuery: (q: string) => void;
   connectionString: string;
   setConnectionString: (s: string) => void;
+  currentConnection: GremlinConnection | null;
+  setCurrentConnection: (connection: GremlinConnection | null) => void;
+  isConnected: boolean;
+  setIsConnected: (connected: boolean) => void;
   nodes: NodeData[];
   setNodes: (n: NodeData[]) => void;
   edges: EdgeData[];
@@ -34,6 +39,10 @@ export const useGraphStore = create<GraphStore>((set) => ({
   setQuery: (q) => set({ query: q }),
   connectionString: "",
   setConnectionString: (s) => set({ connectionString: s }),
+  currentConnection: null,
+  setCurrentConnection: (connection) => set({ currentConnection: connection }),
+  isConnected: false,
+  setIsConnected: (connected) => set({ isConnected: connected }),
   nodes: [],
   setNodes: (n) => set({ nodes: n }),
   edges: [],
